@@ -17,5 +17,5 @@
     "target": "es5"
   },
   "exclude": ["node_modules", ".idea"],
-  "include": ["src/*"]
+  "include": ["src/*", "__tests__"]
 }
