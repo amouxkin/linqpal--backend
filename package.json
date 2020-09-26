@@ -19,6 +19,7 @@
   "author": "Ananthu Sudhikumar",
   "license": "ISC",
   "dependencies": {
+    "@types/jsonwebtoken": "^8.5.0",
     "bcrypt": "^5.0.0",
     "dotenv-cli": "^4.0.0",
     "express": "^4.17.1",

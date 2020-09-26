@@ -1,3 +1,5 @@
 import { Router } from 'express';
 
-export default Router().get('/login', async (request, response) => {});
+export default Router().get('/login', async (request, response, next) => {
+
+});
