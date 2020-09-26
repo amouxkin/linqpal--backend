@@ -31,12 +31,12 @@ describe('Create a new User', () => {
         state: 'State',
         city: 'City'
       },
-      socialSecurityNumber: '2344114',
+      socialSecurityNumber: '2344116',
       telephoneNumber: '123-222-1243'
     });
 
-    user.save().then(() => {
-      UserModel.deleteOne(user);
+    user.save().then(async () => {
+      await UserModel.deleteOne(user);
       done();
     });
   });
