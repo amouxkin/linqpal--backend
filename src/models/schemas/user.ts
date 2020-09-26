@@ -7,16 +7,16 @@ const UserSchema = new Schema({
     lastName: RequiredString
   },
   telephoneNumber: {
-    type: String
-    // required: [true, 'Telephone number is required.'],
-    // validate: /\d{3}-\d{3}-\d{4}/
+    ...RequiredString,
+    validate: /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/
   },
   address: {
-    lineOne: String,
+    lineOne: RequiredString,
     lineTwo: String,
-    city: String,
-    State: String,
-    postalCode: String
+    city: RequiredString,
+    postalCode: RequiredString,
+    state: RequiredString,
+    country: RequiredString
   },
   socialSecurityNumber: String
 });
@@ -31,9 +31,9 @@ export interface User {
     lineOne: string;
     lineTwo?: string;
     city: string;
+    postalCode: string;
     state: string;
     country: string;
-    postalCode: string;
   };
   socialSecurityNumber: string;
 }
