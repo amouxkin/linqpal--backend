@@ -1,5 +1,4 @@
 import { User, UserModel } from 'models/schemas/user';
-
 import { connectToDatabase, closeDatabase } from 'utilities/database';
 
 beforeAll(async () => await connectToDatabase());
