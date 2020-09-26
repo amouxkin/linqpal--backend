@@ -17,7 +17,10 @@ const UserSchema = new Schema({
     state: RequiredString,
     country: RequiredString
   },
-  socialSecurityNumber: String,
+  socialSecurityNumber: {
+    ...RequiredString,
+    unique: true
+  },
   role: {
     type: String,
     default: 'user',
