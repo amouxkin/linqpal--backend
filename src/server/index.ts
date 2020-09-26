@@ -1,9 +1,11 @@
 import express, { json, Router } from 'express';
+import routes from 'server/routes';
 
-const app = express().use(json());
-
-app.get('/', (request, response) => {
-  response.send('Hello World!');
-});
+const app = express()
+  .use(json())
+  .use(
+    routes.reduce((accumulator, router) => accumulator.use(router)),
+    Router()
+  );
 
 export default app;
