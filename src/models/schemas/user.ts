@@ -11,14 +11,18 @@ const UserSchema = new Schema({
     validate: /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/
   },
   address: {
-    lineOne: RequiredString,
-    lineTwo: String,
+    street: RequiredString,
     city: RequiredString,
     postalCode: RequiredString,
     state: RequiredString,
     country: RequiredString
   },
-  socialSecurityNumber: String
+  socialSecurityNumber: String,
+  role: {
+    type: String,
+    default: 'user',
+    enum: ['user', 'admin']
+  }
 });
 
 export interface User {
@@ -28,14 +32,19 @@ export interface User {
   };
   telephoneNumber: string;
   address: {
-    lineOne: string;
-    lineTwo?: string;
+    street: string;
     city: string;
     postalCode: string;
     state: string;
     country: string;
   };
   socialSecurityNumber: string;
+  role: string;
+  isAdmin: boolean; // virtual
 }
+
+UserSchema.virtual('isAdmin').get(function (this: User) {
+  return this.role === 'admin';
+});
 
 export const UserModel = model<User & Document>('User', UserSchema);
