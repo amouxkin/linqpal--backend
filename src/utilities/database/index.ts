@@ -5,7 +5,7 @@ export const connectToDatabase = async () => {
     .on('error', error => console.log('Database connection error\n', error))
     .once('open', () => console.log('Connected to database.\n'));
 
-  await connect(process.env.DATABASE_URL!, {
+  return connect(process.env.DATABASE_URL!, {
     useNewUrlParser: true,
     useFindAndModify: true,
     useUnifiedTopology: true,

@@ -16,9 +16,9 @@ const register: RequestHandler = async (request, response, next) => {
           response.status(400);
       }
 
-      response.send(error);
-    });
-  next();
+      response.send(error.message ?? error);
+    })
+    .finally(next);
 };
 
 export default register;

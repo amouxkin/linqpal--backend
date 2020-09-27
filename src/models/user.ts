@@ -10,7 +10,7 @@ const UserSchema = new Schema({
   },
   telephoneNumber: {
     ...RequiredString,
-    validate: /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/
+    validate: /^\(?(\d{3})\)?[-]?(\d{3})[-]?(\d{4})$/
   },
   address: {
     street: RequiredString,
@@ -34,13 +34,14 @@ const UserSchema = new Schema({
   },
   email: {
     ...RequiredString,
+    index: { unique: true },
     unique: 'Email already exits.',
     validate: [
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       'Please provide a valid email.'
     ]
   },
-  hashedPassword: {
+  password: {
     ...RequiredString,
     validate: [
       /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$/,
@@ -64,7 +65,7 @@ export interface User extends Document {
   };
   socialSecurityNumber: string;
   role: 'user' | 'admin';
-  hashedPassword: string;
+  password: string;
   email: string;
   isAdmin: boolean;
   checkPassword(password: string): boolean;
@@ -72,7 +73,7 @@ export interface User extends Document {
 
 UserSchema.pre<User>('save', async function preSave(next) {
   if (this.isModified('password')) {
-    this.hashedPassword = createHashedPassword(this.hashedPassword);
+    this.password = createHashedPassword(this.password);
   }
 
   if (this.isModified('socialSecurityNumber')) {
@@ -89,7 +90,7 @@ UserSchema.virtual('isAdmin').get(function (this: User) {
 });
 
 UserSchema.methods.checkPassword = function (this: User, password: string) {
-  return checkHashedPassword(password, this.hashedPassword);
+  return checkHashedPassword(password, this.password);
 };
 
 export const UserModel = model<User>('User', UserSchema);

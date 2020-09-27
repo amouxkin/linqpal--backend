@@ -34,7 +34,7 @@ describe('Create a new User', () => {
       socialSecurityNumber: '333-22-4444',
       telephoneNumber: '123-222-1243',
       email: 'tester01@gmail.com',
-      hashedPassword: 'password1'
+      password: 'password1'
     });
 
     user.save().then(async () => {
