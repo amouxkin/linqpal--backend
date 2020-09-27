@@ -1,5 +1,5 @@
-import auth from 'server/routes/auth';
 import { Router } from 'express';
+import auth from './auth';
 
 const routes = <Array<Router>>[auth];
 

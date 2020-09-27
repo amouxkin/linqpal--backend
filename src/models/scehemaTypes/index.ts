@@ -1,1 +1,1 @@
-export { RequiredString } from 'models/scehemaTypes/requiredString';
+export { RequiredString } from './requiredString';
