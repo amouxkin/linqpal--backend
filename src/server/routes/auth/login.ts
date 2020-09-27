@@ -4,17 +4,15 @@ import { UserModel } from 'models/user';
 const login: RequestHandler = async (request, response, next) => {
   const { email, password } = request.body;
 
-  UserModel.findOne({
-    where: { email, password }
-  })
+  UserModel.findOne({ email })
     .then(user => {
-      if (user instanceof UserModel) {
-        response.status(200).send();
+      if (user instanceof UserModel && user.checkPassword(password)) {
+        response.locals.user = user;
       } else {
-        return response.status(401).send('Check credentials');
+        throw new Error('Credentials do not match.');
       }
     })
-    .catch(error => response.status(409).send(error))
+    .catch(error => (response.locals.error = error))
     .finally(next);
 };
 

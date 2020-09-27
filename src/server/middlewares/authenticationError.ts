@@ -15,10 +15,7 @@ const authenticationErrorHandler: RequestHandler = (
       response.status(401).send();
       break;
     default:
-      if (error.name === 'MongoError') {
-        return response.status(400).send(error.message);
-      }
-      response.status(400).send();
+      response.status(400).send(error.message ?? error);
   }
 };
 
