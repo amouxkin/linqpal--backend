@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { UserModel } from 'models/schemas/user';
+import { UserModel } from 'models/user';
 
 export default Router().post('/auth/login', async (request, response, next) => {
   const { email, password } = request.body;

@@ -66,23 +66,30 @@ export interface User extends Document {
   role: string;
   hashedPassword: string;
   email: string;
-  isAdmin: boolean; // virtual
+  isAdmin: boolean;
+  checkPassword(password: string): boolean;
 }
+
+UserSchema.pre<User>('save', async function preSave(next) {
+  if (this.isModified('password')) {
+    this.hashedPassword = createHashedPassword(this.hashedPassword);
+  }
+
+  if (this.isModified('socialSecurityNumber')) {
+    this.socialSecurityNumber = JSON.stringify(
+      encrypt(this.socialSecurityNumber)
+    );
+  }
+
+  return next();
+});
 
 UserSchema.virtual('isAdmin').get(function (this: User) {
   return this.role === 'admin';
 });
 
-UserSchema.pre<User>('save', async function preSave(next) {
-  if (this.isModified('password')) {
-    this.password = createHashedPassword(this.password);
-  }
-
-  if (this.isModified('socialSecurityNumber')) {
-    // this.socialSecurityNumber =
-  }
-
-  return next();
-});
+UserSchema.methods.checkPassword = function (this: User, password: string) {
+  return checkHashedPassword(password, this.hashedPassword);
+};
 
 export const UserModel = model<User>('User', UserSchema);
