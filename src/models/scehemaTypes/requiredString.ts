@@ -1,4 +1,5 @@
 export const RequiredString = {
   type: String,
-  required: true
+  required: true,
+  trim: true
 };

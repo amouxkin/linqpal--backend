@@ -18,7 +18,7 @@ describe('Create a new User', () => {
     user.save().catch(() => done());
   });
 
-  it('should create a new user -- when -- All the required values are not provided', async done => {
+  it('should create a new user -- when -- All the required values are provided', async done => {
     const user = new UserModel(<User>{
       name: {
         firstName: 'Test',
@@ -31,8 +31,10 @@ describe('Create a new User', () => {
         state: 'State',
         city: 'City'
       },
-      socialSecurityNumber: '2344116',
-      telephoneNumber: '123-222-1243'
+      socialSecurityNumber: '333-22-4444',
+      telephoneNumber: '123-222-1243',
+      email: 'tester01@gmail.com',
+      password: 'password'
     });
 
     user.save().then(async () => {
