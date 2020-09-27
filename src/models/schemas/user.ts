@@ -1,6 +1,6 @@
 import { Schema, Document, model } from 'mongoose';
 import { RequiredString } from 'models/scehemaTypes';
-import { createHashedPassword } from '../../server/middlewares/authentication/hashing';
+import { createHashedPassword } from 'utilities/hashing';
 
 const UserSchema = new Schema({
   name: {
@@ -77,7 +77,11 @@ UserSchema.pre<User>('save', async function preSave(next) {
     this.password = createHashedPassword(this.password);
   }
 
-  next();
+  if (this.isModified('socialSecurityNumber')) {
+    // this.socialSecurityNumber =
+  }
+
+  return next();
 });
 
 export const UserModel = model<User>('User', UserSchema);
