@@ -1,6 +1,7 @@
 import { Schema, Document, model } from 'mongoose';
 import { RequiredString } from 'models/scehemaTypes';
-import { createHashedPassword } from 'utilities/hashing';
+import { checkHashedPassword, createHashedPassword } from 'utilities/hashing';
+import { encrypt } from 'utilities/encryption';
 
 const UserSchema = new Schema({
   name: {
@@ -39,7 +40,7 @@ const UserSchema = new Schema({
       'Please provide a valid email.'
     ]
   },
-  password: {
+  hashedPassword: {
     ...RequiredString,
     validate: [
       /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$/,
@@ -63,7 +64,7 @@ export interface User extends Document {
   };
   socialSecurityNumber: string;
   role: string;
-  password: string;
+  hashedPassword: string;
   email: string;
   isAdmin: boolean; // virtual
 }

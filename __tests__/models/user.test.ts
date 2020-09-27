@@ -1,4 +1,4 @@
-import { User, UserModel } from 'models/schemas/user';
+import { User, UserModel } from 'models/user';
 import { connectToDatabase, closeDatabase } from 'utilities/database';
 
 beforeAll(async () => await connectToDatabase());
@@ -34,7 +34,7 @@ describe('Create a new User', () => {
       socialSecurityNumber: '333-22-4444',
       telephoneNumber: '123-222-1243',
       email: 'tester01@gmail.com',
-      password: 'password'
+      hashedPassword: 'password1'
     });
 
     user.save().then(async () => {
