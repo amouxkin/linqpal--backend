@@ -1,11 +1,6 @@
 import { Router } from 'express';
-import auth from './auth';
+import auth from 'server/routes/auth';
 
-const routes = <Array<Router>>[auth];
-
-const router = routes.reduce(
-  (accumulator, router) => accumulator.use(router),
-  Router()
-);
+const router = Router().use('/auth', auth);
 
 export default router;

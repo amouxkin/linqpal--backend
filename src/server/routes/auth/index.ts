@@ -5,7 +5,5 @@ import tokenGenerator from 'server/middlewares/tokenGenerator';
 import authenticationErrorHandler from 'server/middlewares/authenticationError';
 
 export default Router()
-  .post('/auth/login', login)
-  .post('/auth/register', register, tokenGenerator)
-  .use(authenticationErrorHandler)
-  .use(tokenGenerator);
+  .post('/login', login, authenticationErrorHandler, tokenGenerator)
+  .post('/register', register, authenticationErrorHandler, tokenGenerator);

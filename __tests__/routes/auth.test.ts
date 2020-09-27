@@ -1,17 +1,17 @@
 import app from '../app';
 import { closeDatabase, connectToDatabase } from 'utilities/database';
-import { User } from 'models/user';
+import { User, UserModel } from 'models/user';
 
 beforeAll(async () => await connectToDatabase());
 afterAll(async () => await closeDatabase());
 
 describe('Register', () => {
-  // it('should not create a new user -- when -- all required filed are not provided', async done => {
-  //   app.post('/auth/register').then(response => {
-  //     expect(response.status).not.toBe(200);
-  //     done();
-  //   });
-  // });
+  it('should not create a new user -- when -- all required filed are not provided', async done => {
+    app.post('/auth/register').then(response => {
+      expect(response.status).not.toBe(200);
+      done();
+    });
+  });
 
   it('should create a new user -- when -- all required filed are provided', async done => {
     app
