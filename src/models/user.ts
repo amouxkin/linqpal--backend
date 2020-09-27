@@ -63,7 +63,7 @@ export interface User extends Document {
     country: string;
   };
   socialSecurityNumber: string;
-  role: string;
+  role: 'user' | 'admin';
   hashedPassword: string;
   email: string;
   isAdmin: boolean;
