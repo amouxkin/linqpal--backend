@@ -3,6 +3,7 @@ import { UserModel } from 'models/user';
 
 const login: RequestHandler = async (request, response, next) => {
   const { email, password } = request.body;
+
   UserModel.findOne({
     where: { email, password }
   })
@@ -13,7 +14,8 @@ const login: RequestHandler = async (request, response, next) => {
         return response.status(401).send('Check credentials');
       }
     })
-    .catch(error => response.status(409).send(error));
+    .catch(error => response.status(409).send(error))
+    .finally(next);
 };
 
 export default login;
