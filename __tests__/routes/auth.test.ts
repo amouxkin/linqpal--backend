@@ -2,9 +2,6 @@ import app from '../app';
 import { closeDatabase, connectToDatabase } from 'utilities/database';
 import { User, UserModel } from 'models/user';
 
-beforeAll(async () => await connectToDatabase());
-afterAll(async () => await closeDatabase());
-
 const userOne: Partial<User> = {
   name: {
     lastName: 'Last',
@@ -22,6 +19,19 @@ const userOne: Partial<User> = {
     postalCode: '123456'
   }
 };
+
+const deleteUserOne = async () =>
+  UserModel.findOneAndDelete({ email: userOne.email }).catch(error => {});
+
+beforeAll(async () => {
+  await connectToDatabase();
+  await deleteUserOne();
+}, 20_000);
+
+afterAll(async () => {
+  await closeDatabase();
+  await deleteUserOne();
+}, 20_000);
 
 describe('Register', () => {
   it('should not create a new user -- when -- all required filed are not provided', async done => {
@@ -47,7 +57,7 @@ describe('Register', () => {
 describe('Login', () => {
   it('should send error -- when -- the credentials are wrong', async done => {
     app.post('/auth/login').then(response => {
-      expect(response.status).toBe(401);
+      expect(response.status).not.toBe(200);
       done();
     });
   });
