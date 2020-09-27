@@ -1,7 +1,7 @@
-import { Router } from 'express';
+import { RequestHandler } from 'express';
 import { UserModel } from 'models/user';
 
-export default Router().post('/auth/login', async (request, response, next) => {
+const login: RequestHandler = async (request, response, next) => {
   const { email, password } = request.body;
   UserModel.findOne({
     where: { email, password }
@@ -14,4 +14,6 @@ export default Router().post('/auth/login', async (request, response, next) => {
       }
     })
     .catch(error => response.status(409).send(error));
-});
+};
+
+export default login;
