@@ -1,7 +1,4 @@
-import {
-  checkHashedPassword,
-  createHashedPassword
-} from 'server/middlewares/authentication/hashing';
+import { checkHashedPassword, createHashedPassword } from 'utilities/hashing';
 
 describe('Hashing', () => {
   it('should not be equal -- (even) when input is the same', () => {
