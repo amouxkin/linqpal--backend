@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import { User } from 'models/user';
-import { sign } from 'jsonwebtoken';
+import { tokenize } from 'utilities/token';
 
 const tokenGenerator: RequestHandler = (request, response) => {
   const user: User = response.locals.user;
@@ -8,9 +8,7 @@ const tokenGenerator: RequestHandler = (request, response) => {
     name: user.name,
     id: user._id.toString(),
     isAdmin: user.isAdmin,
-    token: sign(user.toJSON(), process.env.JWT_TOKEN_SECRET!, {
-      expiresIn: process.env.JWT_DURATION
-    })
+    token: tokenize(user)
   });
 };
 
