@@ -4,6 +4,11 @@ import { UserModel } from 'models/user';
 const login: RequestHandler = async (request, response, next) => {
   const { email, password } = request.body;
 
+  if (!email || !password) {
+    response.locals.error = new Error('Email or password missing');
+    return next();
+  }
+
   UserModel.findOne({ email })
     .then(user => {
       if (user instanceof UserModel && user.checkPassword(password)) {
@@ -13,7 +18,7 @@ const login: RequestHandler = async (request, response, next) => {
       }
     })
     .catch(error => (response.locals.error = error))
-    .finally(next);
+    .finally(() => next);
 };
 
 export default login;
