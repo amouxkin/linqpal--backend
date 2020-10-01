@@ -71,7 +71,7 @@ export interface User extends Document {
   checkPassword(password: string): boolean;
 }
 
-UserSchema.pre<User>('save', async function preSave(next) {
+UserSchema.pre<User>('save', function preSave(next) {
   if (this.isModified('password')) {
     this.password = createHashedPassword(this.password);
   }

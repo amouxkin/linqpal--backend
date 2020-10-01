@@ -18,7 +18,7 @@ const login: RequestHandler = async (request, response, next) => {
       }
     })
     .catch(error => (response.locals.error = error))
-    .finally(() => next);
+    .finally(next);
 };
 
 export default login;

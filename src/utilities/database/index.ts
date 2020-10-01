@@ -16,4 +16,4 @@ export const connectToDatabase = async () => {
 export const closeDatabase = async () =>
   disconnect()
     .catch(error => console.log('Database disconnection error.\n', error))
-    .then(() => console.log('Database connection closed.m'));
+    .then(() => console.log('Database connection closed.'));
